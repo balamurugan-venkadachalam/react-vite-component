@@ -9,14 +9,9 @@ export const FormContext = React.createContext({
 
 
 function Form(props) {
-  const { children } = props;
+  const { children, submit = () => {}, initialValues } = props;
 
-  const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    emailAddress: '',
-    password: ''
-  });
+  const [form, setForm] = useState(props.initialValues);
 
   const handleFormChange = (event) => {
     // Get the name of the field that caused this change event
@@ -37,16 +32,18 @@ function Form(props) {
 
   return (
     <form className="Form">
-      {children}
+      <FormContext.Provider value={{
+        form,
+        handleFormChange
+      }}>
+        {children}
+      </FormContext.Provider>
+
+      <button type="button" onClick={() => submit(form)}>
+        Submit
+      </button>
     </form>
   );
-
-  <FormContext.Provider value={{
-    form,
-    handleFormChange
-  }}>
-    {children}
-  </FormContext.Provider>
 }
 export default Form;
 

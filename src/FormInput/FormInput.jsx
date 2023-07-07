@@ -11,17 +11,32 @@ function FormInput(props) {
     value, 
     onChange
   } = props;
-  // const formContext = useContext(FormContext);
-  // const { form, handleFormChange } = formContext;
+
+   const formContext = useContext(FormContext);
+   const { form, handleFormChange } = formContext;
+   console.log(`name -> ${name} value -> ${form[name]} type -> ${type}` ); 
   return (
     <div className="FormInput">
       <label>{label}</label>
-      <input
+      {type == 'select' ? (
+        <select>
+          {
+            form[name]?.map((value, index) => (
+              <option value={value}>{value}</option>    
+              ))
+          }
+        
+      </select>
+      ): (
+        <input
         type={type}
         name={name}
-        value={value}
-        onChange={onChange}
-      />
+        value={form[name]}
+        onChange={handleFormChange}
+        />
+       )}
+
+      
     </div>
   )
 }
