@@ -1,19 +1,24 @@
 import './FormInput.css';
 import { useState } from 'react';
+import { useContext } from 'react';
+import { FormContext } from '../Form/Form';
 
 function FormInput(props) {
-  const { label } = props;
-
-  const [value, setValue] = useState('');
-  const onChange = (event) => {
-    setValue(event.target.value);
-  };
-
+  const {
+    label, 
+    type = 'text', 
+    name, 
+    value, 
+    onChange
+  } = props;
+  // const formContext = useContext(FormContext);
+  // const { form, handleFormChange } = formContext;
   return (
     <div className="FormInput">
       <label>{label}</label>
       <input
-        type="text" 
+        type={type}
+        name={name}
         value={value}
         onChange={onChange}
       />
